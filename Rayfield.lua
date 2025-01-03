@@ -1904,6 +1904,8 @@ function RayfieldLibrary:CreateWindow(Settings)
 			Button.Visible = true
 			Button.Parent = TabPage
 
+            ButtonValue.Button=Button
+
 			Button.BackgroundTransparency = 1
 			Button.UIStroke.Transparency = 1
 			Button.Title.TextTransparency = 1
@@ -1911,6 +1913,14 @@ function RayfieldLibrary:CreateWindow(Settings)
 			TweenService:Create(Button, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {BackgroundTransparency = 0}):Play()
 			TweenService:Create(Button.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {Transparency = 0}):Play()
 			TweenService:Create(Button.Title, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {TextTransparency = 0}):Play()	
+
+            if (ButtonSettings.HasDestroyButton or false) then
+                Button.DestroyButton.Visible = true
+                Button.InteractMain.Position=UDim2.fromScale(0.89, 0.5)
+            else
+                Button.DestroyButton.Visible = false
+                Button.InteractMain.Position=UDim2.fromScale(0.961, 0.5)
+            end
 
             function DoCallback()
                 local Success, Response = pcall(ButtonSettings.Callback)
