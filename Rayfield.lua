@@ -2448,7 +2448,10 @@ function RayfieldLibrary:CreateWindow(Settings)
 
             function EnterPressedCallback()
                 print("Rayfield | Doing enterpressed callback for "..InputSettings.Name)
-                local Success, Response = pcall(InputSettings.EnterPressedCallback)
+                local Success, Response = pcall(function()
+                    InputSettings.EnterPressedCallback(Input.InputFrame.InputBox.Text)
+                    InputSettings.CurrentValue = Input.InputFrame.InputBox.Text
+                 end)
                 if not Success then
 					TweenService:Create(Input, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
 					TweenService:Create(Input.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 1}):Play()
@@ -2480,12 +2483,12 @@ function RayfieldLibrary:CreateWindow(Settings)
 					TweenService:Create(Input.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 0}):Play()
 				end
                 
-                if InputSettings.RemoveTextAfterFocusLost then
-                    Input.InputFrame.InputBox.Text = ""
-                end
-                
                 if enterpressed and (InputSettings.DoEnterPressed or false) then
                     EnterPressedCallback()
+                end
+
+                if InputSettings.RemoveTextAfterFocusLost then
+                    Input.InputFrame.InputBox.Text = ""
                 end
                 
 				if not InputSettings.Ext then
