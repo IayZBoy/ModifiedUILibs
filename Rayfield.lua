@@ -2446,11 +2446,11 @@ function RayfieldLibrary:CreateWindow(Settings)
 			Input.InputFrame.InputBox.PlaceholderText = InputSettings.PlaceholderText
 			Input.InputFrame.Size = UDim2.new(0, Input.InputFrame.InputBox.TextBounds.X + 24, 0, 30)
 
-            function EnterPressedCallback()
-                print("Rayfield | Doing enterpressed callback for "..InputSettings.Name)
+            function EnterPressedCallback(Text)
+                print("Rayfield | Doing enterpressed callback")
                 local Success, Response = pcall(function()
-                    InputSettings.EnterPressedCallback(Input.InputFrame.InputBox.Text)
-                    InputSettings.CurrentValue = Input.InputFrame.InputBox.Text
+                    InputSettings.EnterPressedCallback(Text)
+                    InputSettings.CurrentValue = Text
                  end)
                 if not Success then
 					TweenService:Create(Input, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
@@ -2484,7 +2484,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 				end
                 
                 if enterpressed and (InputSettings.DoEnterPressed or false) then
-                    EnterPressedCallback()
+                    EnterPressedCallback(Text)
                 end
 
                 if InputSettings.RemoveTextAfterFocusLost then
