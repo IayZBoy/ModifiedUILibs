@@ -2447,6 +2447,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 			Input.InputFrame.Size = UDim2.new(0, Input.InputFrame.InputBox.TextBounds.X + 24, 0, 30)
 
             function EnterPressedCallback()
+                print("Rayfield | Doing enterpressed callback for "..InputSettings.Name)
                 local Success, Response = pcall(InputSettings.EnterPressedCallback)
                 if not Success then
 					TweenService:Create(Input, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
