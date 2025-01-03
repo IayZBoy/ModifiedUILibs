@@ -2446,25 +2446,6 @@ function RayfieldLibrary:CreateWindow(Settings)
 			Input.InputFrame.InputBox.PlaceholderText = InputSettings.PlaceholderText
 			Input.InputFrame.Size = UDim2.new(0, Input.InputFrame.InputBox.TextBounds.X + 24, 0, 30)
 
-            function EnterPressedCallback(Text)
-                print("Rayfield | Doing enterpressed callback")
-                local Success, Response = pcall(function()
-                    InputSettings.EnterPressedCallback(Text)
-                    InputSettings.CurrentValue = Text
-                 end)
-                if not Success then
-					TweenService:Create(Input, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
-					TweenService:Create(Input.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 1}):Play()
-					Input.Title.Text = "Callback Error"
-					print("Rayfield | "..InputSettings.Name.." Callback Error " ..tostring(Response))
-					warn('Check docs.sirius.menu for help with Rayfield specific development.')
-					task.wait(0.5)
-					Input.Title.Text = InputSettings.Name
-					TweenService:Create(Input, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
-					TweenService:Create(Input.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 0}):Play()
-                end
-            end
-
 			Input.InputFrame.InputBox.FocusLost:Connect(function(enterpressed)
 				local Success, Response = pcall(function()
 					InputSettings.Callback(Input.InputFrame.InputBox.Text)
@@ -2484,7 +2465,22 @@ function RayfieldLibrary:CreateWindow(Settings)
 				end
                 
                 if enterpressed and (InputSettings.DoEnterPressed or false) then
-                    EnterPressedCallback(Text)
+                    print("Rayfield | Doing enterpressed callback")
+                    local Success, Response = pcall(function()
+                        InputSettings.EnterPressedCallback(Text)
+                        InputSettings.CurrentValue = Text
+                     end)
+                    if not Success then
+                        TweenService:Create(Input, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = Color3.fromRGB(85, 0, 0)}):Play()
+                        TweenService:Create(Input.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 1}):Play()
+                        Input.Title.Text = "Callback Error"
+                        print("Rayfield | "..InputSettings.Name.." Callback Error " ..tostring(Response))
+                        warn('Check docs.sirius.menu for help with Rayfield specific development.')
+                        task.wait(0.5)
+                        Input.Title.Text = InputSettings.Name
+                        TweenService:Create(Input, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
+                        TweenService:Create(Input.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 0}):Play()
+                    end
                 end
 
                 if InputSettings.RemoveTextAfterFocusLost then
