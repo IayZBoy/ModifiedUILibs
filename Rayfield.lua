@@ -2483,6 +2483,10 @@ function RayfieldLibrary:CreateWindow(Settings)
                         TweenService:Create(Input, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackground}):Play()
                         TweenService:Create(Input.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 0}):Play()
                     end
+
+                    if (InputSettings.ClearTextAfterEnterPressed or true) then
+                        Input.InputFrame.InputBox.Text = ""
+                    end
                 else
                     print("Rayfield | Enterpressed callback is not set!")
                 end
