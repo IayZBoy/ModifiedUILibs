@@ -2467,7 +2467,7 @@ function RayfieldLibrary:CreateWindow(Settings)
 					InputSettings.CurrentValue = Input.InputFrame.InputBox.Text
 				end)
 
-                if enterpressed and (InputSettings.DoEnterPresed or false) then
+                if enterpressed and (InputSettings.DoEnterPressed or false) then
                     EnterPressedCallback()
                 end
 
